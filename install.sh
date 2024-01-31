@@ -18,7 +18,7 @@ if ss -tulpen | awk '{print $5}' | grep -q ":26656$" ; then
 else
         echo ""
 fi
-NAMADA_TAG="v0.30.3"
+NAMADA_TAG="v0.29.0"
 #TM_HASH="v0.1.4-abciplus"
 NAMADA_CHAIN_ID="public-testnet-15.0dacadb8d663"
 #rm -rf $HOME/.masp-params
