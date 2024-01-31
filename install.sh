@@ -69,13 +69,13 @@ echo 'export GO111MODULE=on' >> $HOME/.bash_profile
 echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> $HOME/.bash_profile && . $HOME/.bash_profile
 go version
 
-#echo -e '\n\e[42mInstall software\e[0m\n' && sleep 1
-#mkdir -p $HOME/cometbft_bin
-#cd $HOME/cometbft_bin
-#wget -O cometbft.tar.gz https://github.com/cometbft/cometbft/releases/download/v0.37.2/cometbft_0.37.2_linux_amd64.tar.gz
-#tar xvf cometbft.tar.gz
-#sudo chmod +x cometbft
-#sudo mv ./cometbft /usr/local/bin/
+echo -e '\n\e[42mInstall software\e[0m\n' && sleep 1
+mkdir -p $HOME/cometbft_bin
+cd $HOME/cometbft_bin
+wget -O cometbft.tar.gz https://github.com/cometbft/cometbft/releases/download/v0.37.2/cometbft_0.37.2_linux_amd64.tar.gz
+tar xvf cometbft.tar.gz
+sudo chmod +x cometbft
+sudo mv ./cometbft /usr/local/bin/
 
 #rm -rf $HOME/namada_bin
 #mkdir -p $HOME/namada_bin
