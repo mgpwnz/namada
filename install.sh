@@ -18,7 +18,7 @@ if ss -tulpen | awk '{print $5}' | grep -q ":26656$" ; then
 else
         echo ""
 fi
-#NAMADA_TAG="v0.28.2"
+NAMADA_TAG="v0.30.3"
 #TM_HASH="v0.1.4-abciplus"
 NAMADA_CHAIN_ID="public-testnet-15.0dacadb8d663"
 #rm -rf $HOME/.masp-params
@@ -90,7 +90,7 @@ cd $HOME
 rm -rf namada
 git clone https://github.com/anoma/namada.git 
 cd namada 
-#git checkout $NAMADA_TAG
+git checkout $NAMADA_TAG
 make build-release
 sudo mv target/release/namada /usr/local/bin/
 sudo mv target/release/namada[c,n,w] /usr/local/bin/
