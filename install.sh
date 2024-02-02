@@ -19,24 +19,26 @@ else
         echo ""
 fi
 NAMADA_TAG="v0.31.0"
-#TM_HASH="v0.1.4-abciplus"
-NAMADA_CHAIN_ID="public-testnet-15.0dacadb8d663"
-#rm -rf $HOME/.masp-params
+NAMADA_CHAIN_ID="shielded-expedition.b40d8e9055"
+rm -rf $HOME/.masp-params
 
-#if [ ! $VALIDATOR_ALIAS ]; then
-#	read -p "Enter validator name: " VALIDATOR_ALIAS
-#	echo 'export VALIDATOR_ALIAS='\"${VALIDATOR_ALIAS}\" >> $HOME/.bash_profile
-#fi
-#if [ ! $EMAIL ]; then
-#        read -p "Enter your email address: " EMAIL
-#        echo 'export EMAIL='\"${EMAIL}\" >> $HOME/.bash_profile
-#fi
+if [ ! $VALIDATOR_ALIAS ]; then
+	read -p "Enter validator name: " VALIDATOR_ALIAS
+	echo 'export VALIDATOR_ALIAS='\"${VALIDATOR_ALIAS}\" >> $HOME/.bash_profile
+fi
+if [ ! $EMAIL ]; then
+        read -p "Enter your email address: " EMAIL
+        echo 'export EMAIL='\"${EMAIL}\" >> $HOME/.bash_profile
+fi
+echo -e 'Setting up swapfile...\n'
+curl -s https://api.nodes.guru/swap8.sh | bash
 echo 'source $HOME/.bashrc' >> $HOME/.bash_profile
 . $HOME/.bash_profile
 sleep 1
 cd $HOME
 sudo apt update
 sudo apt install make unzip clang pkg-config git-core libudev-dev libssl-dev build-essential libclang-12-dev git jq ncdu bsdmainutils htop -y < "/dev/null"
+
 
 echo -e '\n\e[42mInstall Rust\e[0m\n' && sleep 1
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
@@ -77,18 +79,9 @@ tar xvf cometbft.tar.gz
 sudo chmod +x cometbft
 sudo mv ./cometbft /usr/local/bin/
 
-#rm -rf $HOME/namada_bin
-#mkdir -p $HOME/namada_bin
-#cd $HOME/namada_bin
-#wget -O namada.tar.gz https://github.com/anoma/namada/releases/download/v0.23.0/namada-v0.23.0-Linux-x86_64.tar.gz
-#tar xvf namada.tar.gz
-#cd namada-*
-#sudo chmod +x namada namada[c,n,w]
-#sudo mv namada /usr/local/bin/
-#sudo mv namada[c,n,w] /usr/local/bin/
 cd $HOME
 rm -rf namada
-git clone https://github.com/anoma/namada.git 
+git clone https://github.com/anoma/namada 
 cd namada 
 git checkout $NAMADA_TAG
 make build-release
@@ -109,7 +102,7 @@ ExecStart=/usr/local/bin/namadan ledger run
 Environment=NAMADA_LOG=info
 Environment=NAMADA_CMT_STDOUT=true
 Environment=CMT_LOG_LEVEL=p2p:none,pex:error
-LimitSTACK=unlimited
+LimitSTACK=infinity
 RemainAfterExit=no
 Restart=always
 RestartSec=5s
