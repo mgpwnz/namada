@@ -149,7 +149,7 @@ case "$response" in
     sudo systemctl disable namadad.service
     sudo rm /etc/systemd/system/namadad.service
     sudo rm /usr/local/bin/namadan
-    sudo rm -rf $HOME/namada
+    sudo rm -rf $HOME/namada $HOME/.local/share/namada
     echo "Done"
     cd $HOME
     ;;
