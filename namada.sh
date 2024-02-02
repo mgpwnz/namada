@@ -1,13 +1,30 @@
 #!/bin/bash
-exists()
-{
-	  command -v "$1" >/dev/null 2>&1
-  }
-if exists curl; then
-	echo ''
-else
-	  sudo apt update && sudo apt install curl -y < "/dev/null"
-fi
+# Default variables
+function="install"
+NAMADA_TAG="v0.31.0"
+NAMADA_CHAIN_ID="shielded-expedition.b40d8e9055"
+# Options
+option_value(){ echo "$1" | sed -e 's%^--[^=]*=%%g; s%^-[^=]*=%%g'; }
+while test $# -gt 0; do
+        case "$1" in
+        -in|--install)
+            function="install"
+            shift
+            ;;
+        -un|--uninstall)
+            function="uninstall"
+            shift
+            ;;
+	    -up|--update)
+            function="update"
+            shift
+            ;;
+        *|--)
+		break
+		;;
+	esac
+done
+install() {
 bash_profile=$HOME/.bash_profile
 if [ -f "$bash_profile" ]; then
 	    . $HOME/.bash_profile
@@ -16,10 +33,8 @@ if ss -tulpen | awk '{print $5}' | grep -q ":26656$" ; then
         echo -e "\e[31mInstallation is not possible, port 26656 already in use.\e[39m"
         exit
 else
-        echo ""
+        echo "Preparing..."
 fi
-NAMADA_TAG="v0.31.0"
-NAMADA_CHAIN_ID="shielded-expedition.b40d8e9055"
 rm -rf $HOME/.masp-params
 
 if [ ! $VALIDATOR_ALIAS ]; then
@@ -126,3 +141,29 @@ if [[ `service namadad status | grep active` =~ "running" ]]; then
       else
         echo -e "Your namada node \e[31mwas not installed correctly\e[39m, please reinstall."
 fi
+}
+uninstall() {
+read -r -p "You really want to delete the node? [y/N] " response
+case "$response" in
+    [yY][eE][sS]|[yY]) 
+    sudo systemctl disable namadad.service
+    sudo rm /etc/systemd/system/namadad.service
+    sudo rm /usr/local/bin/namadan
+    sudo rm -rf $HOME/namada
+    echo "Done"
+    cd $HOME
+    ;;
+    *)
+        echo Сanceled
+        return 0
+        ;;
+esac
+}
+
+update() {
+echo nothing!
+}
+# Actions
+sudo apt install wget -y &>/dev/null
+cd
+$function
