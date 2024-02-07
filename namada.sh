@@ -161,24 +161,25 @@ esac
 }
 
 update() {
-##   rm -rf namada
-#    git clone https://github.com/anoma/namada 
-#    cd namada 
-#    git checkout $NAMADA_TAG
-#    make build-release
-#    sudo mv target/release/namada /usr/local/bin/
-#    sudo mv target/release/namada[c,n,w] /usr/local/bin/
-#    cd $HOME
-#    namada client utils join-network --chain-id $NAMADA_CHAIN_ID
-#    sudo systemctl restart namadad
-#    echo -e '\n\e[42mCheck node status\e[0m\n' && sleep 1
-#    if [[ `service namadad status | grep active` =~ "running" ]]; then
-#            echo -e "Your namada node \e[32minstalled and works\e[39m!"
-#            echo -e "You can check node status by the command \e[7mservice namadad status\e[0m"
-#            echo -e "Press \e[7mQ\e[0m for exit from status menu"
-#        else
-#            echo -e "Your namada node \e[31mwas not installed correctly\e[39m, please reinstall."
-#    fi
+    cd $HOME
+    rm -rf namada
+    git clone https://github.com/anoma/namada 
+    cd namada 
+    git checkout $NAMADA_TAG
+    make build-release
+    sudo mv target/release/namada /usr/local/bin/
+    sudo mv target/release/namada[c,n,w] /usr/local/bin/
+    cd $HOME
+    namada client utils join-network --chain-id $NAMADA_CHAIN_ID
+    sudo systemctl restart namadad
+    echo -e '\n\e[42mCheck node status\e[0m\n' && sleep 1
+    if [[ `service namadad status | grep active` =~ "running" ]]; then
+            echo -e "Your namada node \e[32minstalled and works\e[39m!"
+            echo -e "You can check node status by the command \e[7mservice namadad status\e[0m"
+            echo -e "Press \e[7mQ\e[0m for exit from status menu"
+        else
+            echo -e "Your namada node \e[31mwas not installed correctly\e[39m, please reinstall."
+    fi
 }
 # Actions
 sudo apt install wget -y &>/dev/null
