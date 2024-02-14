@@ -1,7 +1,7 @@
 #!/bin/bash
 # Default variables
 function="install"
-NAMADA_TAG="v0.31.2"
+NAMADA_TAG="v0.31.4"
 NAMADA_CHAIN_ID="shielded-expedition.88f17d1d14"
 # Options
 option_value(){ echo "$1" | sed -e 's%^--[^=]*=%%g; s%^-[^=]*=%%g'; }
